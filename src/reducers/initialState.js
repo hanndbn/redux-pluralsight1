@@ -1,4 +1,6 @@
 export default {
+  courses: [],
+  authors: [],
   fuelSavings: {
     newMpg: '',
     tradeMpg: '',

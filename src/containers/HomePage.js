@@ -3,39 +3,32 @@ import '../../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import * as actions from '../actions/homePageActions';
+import PropTypes from 'prop-types';
+import CourseList from './course/CourseList';
 
-class HomePage extends React.Component{
-  constructor(props){
-    super(props);
-  }
-
-  _handleChangeName(){
-    this.props.actions.saveMyName(this.refs.myName.value);
-
-  }
+class HomePage extends React.Component {
   render() {
+    //const {courses} = this.props;
     return (
       <div>
-        <h1>Hello {this.props.homePage.myName}</h1>
-
-        <input type="text" ref="myName"/>
-        <button onClick={()=>{this._handleChangeName()}}>Save Name</button>
+        <h1>Course</h1>
+        <CourseList courses={this.props.courses}/>
       </div>
     );
   }
 }
+HomePage.propTypes = {
+  courses: PropTypes.array.isRequired,
+};
 function mapStateToProps(state) {
+
   return {
-    homePage: state.homePage
+    courses: state.homePage.courses
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    // saveMyName: (myName)=>{
-    //   dispatch(actions.saveMyName(myName))
-    // },
-    actions: bindActionCreators(actions, dispatch)
   };
 }
 export default connect(mapStateToProps, mapDispatchToProps)(HomePage);
