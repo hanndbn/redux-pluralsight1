@@ -8,6 +8,20 @@ export function loadCoursesSuccess(courses) {
   };
 }
 
+export function updateCoursesSuccess(courses) {
+  return {
+    type: types.UPDATE_COUSRSES_SUCCESS,
+    courses
+  };
+}
+
+export function createCoursesSuccess(courses) {
+  return {
+    type: types.ADD_COUSRSES_SUCCESS,
+    courses
+  };
+}
+
 
 export function loadCourses() {
   return function (dispatch) {
@@ -18,3 +32,15 @@ export function loadCourses() {
     });
   };
 }
+
+export function createCourse(course) {
+  return function (dispatch) {
+    return courseApi.saveCourse(course).then(savedCourses => {
+      course.id ? dispatch(updateCoursesSuccess(savedCourses)):
+      dispatch(createCoursesSuccess(savedCourses));
+    }).catch(error => {
+      throw (error);
+    });
+  };
+}
+

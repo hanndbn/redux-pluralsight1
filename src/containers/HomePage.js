@@ -1,10 +1,8 @@
-import React from 'react';
-import '../../node_modules/bootstrap/dist/css/bootstrap.min.css';
-import {connect} from 'react-redux';
-import {bindActionCreators} from 'redux';
-import * as actions from '../actions/homePageActions';
-import PropTypes from 'prop-types';
-import CourseList from './course/CourseList';
+import React from "react";
+import "../../node_modules/bootstrap/dist/css/bootstrap.min.css";
+import {connect} from "react-redux";
+import PropTypes from "prop-types";
+import CourseList from "./course/CourseList";
 
 class HomePage extends React.Component {
   render() {
@@ -21,13 +19,12 @@ HomePage.propTypes = {
   courses: PropTypes.array.isRequired,
 };
 function mapStateToProps(state) {
-
   return {
     courses: state.homePage.courses
   };
 }
 
-function mapDispatchToProps(dispatch) {
+function mapDispatchToProps() {
   return {
   };
 }

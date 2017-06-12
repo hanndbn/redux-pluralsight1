@@ -6,14 +6,26 @@ import PropTypes from 'prop-types';
 import CourseFrom from '../../components/course/CourseForm';
 
 class CourseManager extends React.Component {
-  constructor(props) {
-    super(props);
+  constructor(props, context) {
+    super(props, context);
+    this.state = {
+      course: Object.assign({}, props.course),
+      errors: {}
+    };
+    this.updateCourseState = this.updateCourseState.bind(this);
+    this.saveCourse = this.saveCourse.bind(this);
   }
 
-  updateCourseInfo(e){
+  updateCourseState(e){
     let field = e.target.name;
-    this.props[field] = e.target.value;
+    let course  = this.state.course;
+    course[field] = e.target.value;
+    return this.setState({course: course});
+  }
 
+  saveCourse(event){
+    event.preventDefault();
+    this.props.actions.saveCourse(this.state.course);
   }
 
   render() {
@@ -22,13 +34,15 @@ class CourseManager extends React.Component {
         value: author.id,
         text: author.firstName + ' ' + author.lastName
       };
-    })
+    });
     return (
       <div>
         <CourseFrom
           allAuthor = {authorFormatForDropdown}
-          course={this.props.course}
-          errors={this.props.errors}
+          onChange = {this.updateCourseState}
+          onSave={this.saveCourse}
+          course={this.state.course}
+          errors={this.state.errors}
           loading = {false}
         />
       </div>
@@ -38,6 +52,7 @@ class CourseManager extends React.Component {
 CourseManager.propTypes = {
   course: PropTypes.object.isRequired,
   errors: PropTypes.object,
+  actions: PropTypes.object.isRequired
 };
 function mapStateToProps(state) {
   let course = {
